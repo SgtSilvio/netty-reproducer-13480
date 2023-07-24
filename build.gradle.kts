@@ -14,12 +14,3 @@ dependencies {
     implementation("io.netty:netty-resolver-dns-native-macos:4.1.95.Final:osx-aarch_64")
 //    implementation(files("/Users/sgiebl/Projects/sgtsilvio/netty/resolver-dns-native-macos/target/netty-resolver-dns-native-macos-4.1.95.Final-SNAPSHOT-osx-aarch_64.jar"))
 }
-
-dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.9.3"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-}
-
-tasks.test {
-    useJUnitPlatform()
-}
