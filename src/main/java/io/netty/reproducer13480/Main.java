@@ -22,14 +22,15 @@ public class Main {
                 throw new RuntimeException(e);
             }
         }).toArray(URL[]::new);
-        final WeakReference<URLClassLoader> classLoaderWeakReference;
-        try (final URLClassLoader classLoader = new URLClassLoader("wabern", classPathUrls, null)) {
-            classLoaderWeakReference = new WeakReference<>(classLoader);
-            Class<?> clazz = classLoader.loadClass("io.netty.resolver.dns.DnsServerAddressStreamProviders");
-            clazz.getDeclaredMethod("platformDefault").invoke(null);
-            //noinspection UnusedAssignment explicitely free local variable
-            clazz = null;
-        }
+        URLClassLoader classLoader = new URLClassLoader("wabern", classPathUrls, null);
+        final WeakReference<URLClassLoader> classLoaderWeakReference = new WeakReference<>(classLoader);
+        Class<?> clazz = classLoader.loadClass("io.netty.resolver.dns.DnsServerAddressStreamProviders");
+        clazz.getDeclaredMethod("platformDefault").invoke(null);
+        classLoader.close();
+        //noinspection UnusedAssignment explicitely free local variable
+        clazz = null;
+        //noinspection UnusedAssignment explicitely free local variable
+        classLoader = null;
         System.gc();
         if (classLoaderWeakReference.get() != null) {
             throw new AssertionError();
