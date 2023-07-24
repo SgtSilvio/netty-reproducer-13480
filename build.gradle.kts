@@ -2,7 +2,6 @@ plugins {
     java
 }
 
-group = "io.netty.reproducer13480"
 version = "1.0-SNAPSHOT"
 
 repositories {
